@@ -31,7 +31,7 @@ export default function Sidebar() {
           icon: <User />,
         },
         {
-          link: "/",
+          link: "/inbox",
           text: "Inbox",
           icon: <Inbox />,
         },
