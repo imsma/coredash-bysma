@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function UserItem() {
   return (
     <div className="flex items-center justify-center gap-2 border rounded-[8px] p-2">

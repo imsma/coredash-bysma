@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Bell,
   Cookie,
@@ -6,6 +8,7 @@ import {
   Inbox,
   Logs,
   Settings,
+  Share2,
   User,
 } from "lucide-react";
 
@@ -19,8 +22,20 @@ import {
   CommandSeparator,
 } from "./ui/command";
 import UserItem from "./UserItem";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button, buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 export default function Sidebar() {
+  const router = useRouter();
+
   const menuList = [
     {
       group: "General",
@@ -75,25 +90,32 @@ export default function Sidebar() {
       <div>
         <UserItem />
       </div>
-      <div className="grow">
-        <Command style={{ overflow: "visible" }}>
-          <CommandList style={{ overflow: "visible" }}>
-            {menuList.map((menu: any, key: number) => (
-              <CommandGroup key={key} heading={menu.group}>
-                {menu.items.map((menuItem: any, menuItemKey: number) => (
-                  <CommandItem
-                    key={menuItemKey}
-                    className="flex gap-2 cursor-pointer"
-                  >
-                    {menuItem.icon}
-                    {menuItem.text}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            ))}
-          </CommandList>
-        </Command>
+
+      <div
+        data-collapsed={false}
+        className=" grow group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
+      >
+        <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+          {menuList.map((menu: any, key: number) => (
+            <div key={key}>
+              {menu.items.map((menuItem: any, menuItemKey: number) => (
+                <Link
+                  key={menuItemKey}
+                  className={cn(
+                    buttonVariants({ variant: "ghost", size: "sm" }),
+                    "flex items-center justify-start gap-2"
+                  )}
+                  href={menuItem.link}
+                >
+                  {menuItem.icon}
+                  {menuItem.text}
+                </Link>
+              ))}
+            </div>
+          ))}
+        </nav>
       </div>
+
       <div>Settings / Notifications</div>
     </div>
   );
